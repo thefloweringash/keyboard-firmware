@@ -1,10 +1,10 @@
-{ stdenv, lib, qmake, qtbase, libusb, pkgconfig,
- withCompiler ? !stdenv.isAarch64, compiler ? null,
+{ stdenv, mkDerivation, lib, qmake, qtbase, libusb, pkgconfig,
+ withCompiler ? false, compiler ? null,
 }:
 
 assert withCompiler -> compiler != null;
 
-stdenv.mkDerivation {
+mkDerivation {
   name = "qtclient";
   src = lib.cleanSource ../qtclient;
   nativeBuildInputs = [ qmake pkgconfig ];
@@ -26,6 +26,8 @@ stdenv.mkDerivation {
   installPhase = if stdenv.isDarwin then ''
     mkdir -p $out/Applications
     mv KeyboardClient.app $out/Applications
+
+    wrapQtApp $out/Applications/KeyboardClient.app/Contents/MacOS/KeyboardClient
   '' else ''
     make install INSTALL_ROOT=$out
   '';
