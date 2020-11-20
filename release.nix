@@ -11,7 +11,7 @@ let
 in
 
 rec {
-  qtclient = libsForQt5.callPackage ./nix/qtclient.nix {
+  qtclient = qt5.callPackage ./nix/qtclient.nix {
     inherit compiler;
   };
 
