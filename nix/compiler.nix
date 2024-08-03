@@ -1,5 +1,5 @@
 { lib, mkDerivation, base, bytestring, containers, fgl, hspec, mtl
-, parsec, stdenv, ghc
+, parsec, ghc
 }:
 mkDerivation {
   pname = "Compiler";
@@ -13,7 +13,7 @@ mkDerivation {
   testHaskellDepends = [
     base bytestring containers fgl hspec mtl parsec
   ];
-  license = stdenv.lib.licenses.gpl2;
+  license = lib.licenses.gpl2;
   postInstall = ''
     mkdir -p $out/include
     cp dist/build/*.h $out/include
